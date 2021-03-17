@@ -1,0 +1,40 @@
+{
+  "name": "LV1",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "android": "react-native run-android",
+    "ios": "react-native run-ios",
+    "start": "react-native start",
+    "test": "jest",
+    "lint": "eslint ."
+  },
+  "dependencies": {
+    "i": "^0.3.6",
+    "i18n-js": "^3.8.0",
+    "npm": "^7.6.3",
+    "react": "17.0.1",
+    "react-native": "0.64.0",
+    "react-native-localize": "^2.0.2",
+    "react-native-modal": "^11.7.0",
+    "react-native-svg": "^12.1.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/runtime": "^7.13.10",
+    "@react-native-community/eslint-config": "^2.0.0",
+    "@types/jest": "^26.0.20",
+    "@types/react": "^17.0.3",
+    "@types/react-native": "^0.63.52",
+    "@types/react-test-renderer": "^17.0.1",
+    "babel-jest": "^26.6.3",
+    "eslint": "^7.22.0",
+    "jest": "^26.6.3",
+    "metro-react-native-babel-preset": "^0.65.2",
+    "react-test-renderer": "17.0.1",
+    "typescript": "^4.2.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
