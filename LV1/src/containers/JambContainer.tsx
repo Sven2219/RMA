@@ -1,22 +1,22 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import JambScreen from '../screens/JambScreen';
-import { numberOfPlayers as players } from '../consts/keys';
+import { checkCombinationStatus, numberOfPlayers as players } from '../consts/keys';
 import { Player } from '../consts/interfaces';
 import { generatePlayers } from '../helpers/startUpFunctions';
 import { dicesDefaultValues, PlayerDices } from '../consts/diceData';
-
-
+import { isMaxScala, isMinScala, isPoker } from '../helpers/combinationFunctions';
 
 const JambContainer = () => {
 
     const [numberOfPlayers, setNumberOfPlayers] = useState<number>(players.TWO_PLAYERS);
     const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
     const [isPlayerStatisticOpen, setIsPlayerStatisticOpen] = useState<boolean>(false);
-
+    const [checkCombination, setCheckCombination] = useState<number>(checkCombinationStatus.DEFAULT);
     const [throwNumber, setThrowNumber] = useState<number>(0);
     const [allPlayers, setAllPlayers] = useState<Player[]>([]);
-    const [currentPlayer, setCurrentPlayer] = useState<number>(1);
+    const [currentPlayer, setCurrentPlayer] = useState<number>(0);
     const [currentDices, setCurrentDices] = useState<PlayerDices>(dicesDefaultValues);
+    const [nextPlayer, setNextPlayer] = useState<boolean>(false);
 
     useEffect(() => {
         if (!isModalOpen) {
@@ -28,15 +28,50 @@ const JambContainer = () => {
 
     useEffect(() => {
         if (throwNumber === 3) {
+            setCheckCombination(checkCombinationStatus.SHOW_TEXT);
+        }
+    }, [throwNumber])
+
+    useEffect(() => {
+        if (checkCombination === checkCombinationStatus.CHECK_COMBINATION) {
+            if (isPoker(currentDices)) {
+                setAllPlayers((state) => {
+                    return {
+                        ...state,
+                        [currentPlayer - 1]: { ...state[currentPlayer - 1], pokerStatus: state[currentPlayer - 1].pokerStatus + 1 }
+                    }
+                })
+            } else if (isMaxScala(currentDices)) {
+                setAllPlayers((state) => {
+                    return {
+                        ...state,
+                        [currentPlayer - 1]: { ...state[currentPlayer - 1], bigScaleStatus: state[currentPlayer - 1].bigScaleStatus + 1 }
+                    }
+                })
+            } else if (isMinScala(currentDices)) {
+                setAllPlayers((state) => {
+                    return {
+                        ...state,
+                        [currentPlayer - 1]: { ...state[currentPlayer - 1], minScaleStatus: state[currentPlayer - 1].minScaleStatus + 1 }
+                    }
+                })
+            }
+            setCheckCombination(checkCombinationStatus.DEFAULT)
+            setNextPlayer(true);
+        }
+    }, [checkCombination])
+
+    useEffect(() => {
+        if (!nextPlayer) {
             if (currentPlayer + 1 <= numberOfPlayers) {
                 setCurrentPlayer((state) => state + 1);
-                setCurrentDices(dicesDefaultValues);
             } else {
                 setCurrentPlayer(1);
             }
             setThrowNumber(0)
+            setCurrentDices(dicesDefaultValues);
         }
-    }, [throwNumber])
+    }, [nextPlayer])
 
     const generateDices = useCallback(() => {
         let dices: PlayerDices = Object.values(currentDices).map((el) => {
@@ -61,6 +96,10 @@ const JambContainer = () => {
             currentPlayer={currentPlayer}
             isPlayerStatisticOpen={isPlayerStatisticOpen}
             currentDices={currentDices}
+            nextPlayer={nextPlayer}
+            checkCombination={checkCombination}
+            setCheckCombination={setCheckCombination}
+            setNextPlayer={setNextPlayer}
             setCurrentDices={setCurrentDices}
             generateDices={generateDices}
             setIsPlayerStatisticOpen={setIsPlayerStatisticOpen}

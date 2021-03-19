@@ -1,3 +1,4 @@
+//@ts-ignore
 import I18n from 'i18n-js';
 import * as RNLocalize from "react-native-localize";
 import en from './en';

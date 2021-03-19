@@ -8,16 +8,18 @@ import DiceCircle from './DiceCircle';
 interface Props {
     diceData: any;
     index: number;
+    throwNumber: number;
     setCurrentDices: React.Dispatch<React.SetStateAction<PlayerDices>>;
 }
 
 const Dice = (props: Props) => {
+
     return (
         <TouchableOpacity style={[styles.diceContainer, styles.shadow, { backgroundColor: props.diceData.disabled ? colors.darkGray : colors.white }]}
-            onPress={() => props.setCurrentDices((state) => {
+            onPress={() => props.throwNumber !== 0 ? props.setCurrentDices((state) => {
                 const dice: DiceValues = Object.values(state)[props.index];
                 return { ...state, [props.index]: { value: dice.value, disabled: !dice.disabled } }
-            })} >
+            }) : null} >
             <FlatList
                 data={props.diceData.value}
                 numColumns={3}

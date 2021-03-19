@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import Dice from '../components/Dice';
 import MenuModal from '../components/MenuModal';
@@ -7,7 +7,9 @@ import RollButton from '../components/RollButton';
 import { dices, PlayerDices } from '../consts/diceData';
 import { fonts } from '../consts/fonts';
 import { Player } from '../consts/interfaces';
+import { checkCombinationStatus } from '../consts/keys';
 import I18n from '../consts/translation';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {
     numberOfPlayers: number;
@@ -17,6 +19,10 @@ interface Props {
     currentPlayer: number;
     isPlayerStatisticOpen: boolean;
     currentDices: PlayerDices;
+    nextPlayer: boolean;
+    checkCombination: number;
+    setCheckCombination: React.Dispatch<React.SetStateAction<number>>;
+    setNextPlayer: React.Dispatch<React.SetStateAction<boolean>>;
     generateDices: () => void;
     setCurrentDices: React.Dispatch<React.SetStateAction<PlayerDices>>;
     setIsPlayerStatisticOpen: React.Dispatch<React.SetStateAction<boolean>>;
@@ -27,7 +33,6 @@ interface Props {
 
 const JambScreen = (props: Props) => {
 
-
     const firstRow = useMemo(() => {
         const currentDicesFirst = Object.values(props.currentDices).slice(0, 3);
         return currentDicesFirst.map((el) => {
@@ -37,7 +42,7 @@ const JambScreen = (props: Props) => {
             }
         });
     }, [props.currentDices]);
-    
+
     const secondRow = useMemo(() => {
         const currentDicesSecond = Object.values(props.currentDices).slice(3, 6);
         return currentDicesSecond.map((el) => {
@@ -48,6 +53,12 @@ const JambScreen = (props: Props) => {
         });
     }, [props.currentDices]);
 
+    const handlePress = useCallback(() => {
+        if (props.checkCombination === checkCombinationStatus.SHOW_TEXT) {
+            return props.setCheckCombination(checkCombinationStatus.CHECK_COMBINATION);
+        }
+        return !props.nextPlayer ? props.generateDices() : props.setNextPlayer(false)
+    }, [props.nextPlayer, props.generateDices, props.setNextPlayer, props.checkCombination, props.setCheckCombination])
 
 
     return (
@@ -56,7 +67,7 @@ const JambScreen = (props: Props) => {
                 <Text style={styles.headerText}>{I18n.t("jamb")}</Text>
             </View>
             <TouchableOpacity style={styles.playerStatusContainer} onPress={() => props.setIsPlayerStatisticOpen(true)}>
-                <Text>Status</Text>
+                <MaterialCommunityIcons name="table-of-contents" size={40} />
             </TouchableOpacity>
             <View style={styles.dicePosition}>
                 <View>
@@ -65,11 +76,12 @@ const JambScreen = (props: Props) => {
 
                 <View style={styles.row}>
                     {firstRow.map((el, index) => {
-                        return <View style={styles.diceContainer} key={index + 'first'}>
+                        return <View style={styles.diceContainer} key={`${index}--first`}>
                             <Dice
                                 diceData={el}
                                 index={index}
-                                key={index + 'first'}
+                                key={`${index}-first`}
+                                throwNumber={props.throwNumber}
                                 setCurrentDices={props.setCurrentDices}
                             />
                         </View>
@@ -77,17 +89,22 @@ const JambScreen = (props: Props) => {
                 </View>
                 <View style={styles.row}>
                     {secondRow.map((el, index) => {
-                        return <View style={styles.diceContainer} key={index + 'second'}>
+                        return <View style={styles.diceContainer} key={`${index}--second`}>
                             <Dice
                                 diceData={el}
                                 index={index + 3}
-                                key={index + 'second'}
+                                key={`${index}-second`}
+                                throwNumber={props.throwNumber}
                                 setCurrentDices={props.setCurrentDices}
                             />
                         </View>
                     })}
                 </View>
-                <RollButton handlePress={props.generateDices} />
+                <RollButton
+                    nextPlayer={props.nextPlayer}
+                    checkCombination={props.checkCombination}
+                    handlePress={handlePress}
+                />
             </View>
             <MenuModal
                 isModalOpen={props.isModalOpen}
@@ -96,7 +113,7 @@ const JambScreen = (props: Props) => {
                 setNumberOfPlayers={props.setNumberOfPlayers}
             />
             <PlayerStatisticModal
-                playerInfo={props.allPlayers[props.currentPlayer]}
+                playerInfo={props.allPlayers[props.currentPlayer - 1]}
                 isPlayerStatisticOpen={props.isPlayerStatisticOpen}
                 setIsPlayerStatisticOpen={props.setIsPlayerStatisticOpen}
             />
@@ -139,7 +156,7 @@ const styles = StyleSheet.create({
     },
     playerStatusContainer: {
         position: 'absolute',
-        top: 24,
+        top: 14,
         right: 24
     }
 })
