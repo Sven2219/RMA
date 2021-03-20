@@ -8,30 +8,29 @@ export const getFrequnecy = (currentDices: PlayerDices) => {
     return frequency;
 }
 
-export const isPoker = (currentDices: PlayerDices):boolean => {
+export const isPoker = (currentDices: PlayerDices): boolean => {
     const frequency = getFrequnecy(currentDices);
     return Object.values(frequency).includes(4)
 }
 
-export const isMinScala = (currentDices: PlayerDices):boolean => {
+export const isMinScala = (currentDices: PlayerDices): boolean => {
     const frequency = getFrequnecy(currentDices);
-    console.log(frequency)
     let counter: number = 0;
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 5; i++) {
         if (frequency[i] > 0) {
             counter++
         }
     }
-    return counter === 3 ? true : false;
+    return counter === 5 ? true : false;
 }
 
-export const isMaxScala = (currentDices: PlayerDices):boolean => {
+export const isMaxScala = (currentDices: PlayerDices): boolean => {
     const frequency = getFrequnecy(currentDices);
     let counter: number = 0;
-    for (let i = 3; i < 6; i++) {
+    for (let i = 0; i < 6; i++) {
         if (frequency[i] > 0) {
             counter++
         }
     }
-    return counter === 3 ? true : false;
+    return counter === 6 ? true : false;
 }

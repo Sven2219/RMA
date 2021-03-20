@@ -70,8 +70,9 @@ const JambScreen = (props: Props) => {
                 <MaterialCommunityIcons name="table-of-contents" size={40} />
             </TouchableOpacity>
             <View style={styles.dicePosition}>
-                <View>
+                <View style={styles.rollContainer}>
                     <Text style={styles.playerText}>{`Player ${props.currentPlayer}`}</Text>
+                    <Text style={[styles.playerText,styles.throwNumberPosition]}>{`Roll ${props.throwNumber}`}</Text>
                 </View>
 
                 <View style={styles.row}>
@@ -158,6 +159,14 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 14,
         right: 24
+    },
+    rollContainer:{
+        flexDirection:'row',
+        justifyContent:'space-between',
+        alignItems:'center'
+    },
+    throwNumberPosition:{
+        right:10
     }
 })
 
