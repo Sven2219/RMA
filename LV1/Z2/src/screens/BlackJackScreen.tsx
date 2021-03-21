@@ -42,7 +42,7 @@ const BlackJackScreen = (props: Props) => {
 
     return (
         <View style={styles.mainContainer}>
-            <View style={styles.titleContainer}>
+            <View style={[styles.titleContainer,styles.positionCenter]}>
                 <Text style={styles.title}>{I18n.t("blackJack")}</Text>
             </View>
             <View style={styles.playerContainer}>
@@ -62,7 +62,7 @@ const BlackJackScreen = (props: Props) => {
                 }}
             />
             { props.computerCards.totalValue !== 0 || props.isGameOver ?
-                <View style={styles.resultContainer}>
+                <View style={[styles.resultContainer,styles.positionCenter]}>
                     <Text style={[styles.resultText, { color: getResult(fields.COLOR) }]}>
                         {getResult(fields.TEXT)}
                     </Text>
@@ -70,7 +70,7 @@ const BlackJackScreen = (props: Props) => {
             }
 
             {
-                props.isPlayer && !props.reset? <View style={styles.buttonContainer}>
+                props.isPlayer && !props.reset ? <View style={styles.buttonContainer}>
                     <CustomButton title={I18n.t("deal")} handleClick={() => props.incrementDeal((state) => state + 1)} />
                     <CustomButton title={I18n.t("stand")} handleClick={() => props.setIsEnough(true)} />
                 </View> : null
@@ -87,9 +87,6 @@ const BlackJackScreen = (props: Props) => {
 
 const styles = StyleSheet.create({
     titleContainer: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
         padding: 30
     },
     title: {
@@ -113,10 +110,12 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         paddingBottom: 40
     },
-    resultContainer: {
+    positionCenter: {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    resultContainer: {
         paddingBottom: 20
     },
     resultText: {

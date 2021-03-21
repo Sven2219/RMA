@@ -1,16 +1,21 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Image } from 'react-native';
+import { Card as ICard } from '../consts/cards';
 import { colors } from '../consts/colors';
 import { dimensions } from '../consts/dimensions';
+import { images } from '../consts/images';
 
 interface Props {
-    card: string;
+    card: ICard;
 }
-
+const cardSymbol = [images.clubs, images.diamonds, images.hearts, images.spades]
 const Card = (props: Props) => {
     return (
         <View style={[styles.cardContainer, styles.shadow]}>
-            <Text style={styles.cardValue}>{props.card}</Text>
+            <View style={styles.imagePosition}>
+                <Image source={cardSymbol[props.card.symbol]} style={styles.imageDimension} />
+            </View>
+            <Text style={styles.cardValue}>{props.card.card}</Text>
         </View>
     )
 }
@@ -22,8 +27,8 @@ const styles = StyleSheet.create({
         width: dimensions.cardWidth,
         justifyContent: 'center',
         alignItems: 'center',
-        borderWidth:1,
-        borderColor:colors.dimGray
+        borderWidth: 1,
+        borderColor: colors.dimGray
     },
     shadow: {
         shadowColor: "#000",
@@ -37,6 +42,16 @@ const styles = StyleSheet.create({
     },
     cardValue: {
         fontSize: 30,
+    },
+    imagePosition: {
+        position: 'absolute',
+        top: 0,
+        left: 0
+    },
+    imageDimension: {
+        width: 40,
+        height: 40,
+        resizeMode: 'contain'
     }
 })
 

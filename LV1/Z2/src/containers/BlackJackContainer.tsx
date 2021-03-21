@@ -7,14 +7,14 @@ import BlackJackScreen from '../screens/BlackJackScreen';
 
 
 export interface BlackJack {
-    cards: string[];
+    cards: Card[];
     totalValue: number;
 }
 
 const BlackJackContainer = () => {
 
     const [userCards, setUserCards] = useState<BlackJack>({ cards: [], totalValue: 0 });
-    const [computerCards, setComputerCards] = useState<BlackJack>({ cards: [], totalValue: 0 });
+    const [computerCards, setComputerCards] = useState<BlackJack>({ cards: [] , totalValue: 0 });
     const [isEnough, setIsEnough] = useState<boolean>(false);
     const [dealNumber, setDealNumber] = useState<number>(0);
     const [deck, setDeck] = useState<Card[]>([]);
@@ -35,6 +35,7 @@ const BlackJackContainer = () => {
         }
     }, [reset])
 
+    console.log(userCards)
     useEffect(() => {
         if (!isGameOver) {
             setDeck(generateDeck());
@@ -56,12 +57,12 @@ const BlackJackContainer = () => {
             while (computerValue <= 16) {
                 const { deckCopy, randomCard } = generateRandomCard();
                 setDeck(deckCopy)
-                computerCards.push(randomCard[0].card)
+                
+                computerCards.push(randomCard[0])
                 computerValue += randomCard[0].card === "A" && computerValue > 10 ? 1 : randomCard[0].value;
             }
             setComputerCards({ cards: computerCards, totalValue: computerValue });
             setReset(true);
-
         }
     }, [player])
 
@@ -71,7 +72,7 @@ const BlackJackContainer = () => {
             const totalValue = randomCard[0].card === "A" && userCards.totalValue >= 11 ? userCards.totalValue + 1 : userCards.totalValue + randomCard[0].value;
             setUserCards((state) => {
                 return {
-                    cards: [...state.cards, randomCard[0].card],
+                    cards: [...state.cards, randomCard[0]],
                     totalValue: totalValue
                 }
             })
