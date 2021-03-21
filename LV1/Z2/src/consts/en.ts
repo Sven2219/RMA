@@ -5,5 +5,6 @@ export default {
     player: "Player",
     computer: "Computer",
     youLost: "You lost",
-    youWin: "You win"
+    youWin: "You win",
+    retry: "Retry"
 };

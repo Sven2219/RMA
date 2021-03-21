@@ -20,6 +20,20 @@ const BlackJackContainer = () => {
     const [deck, setDeck] = useState<Card[]>([]);
     const [player, setPlayer] = useState<number>(PlayerKeys.PLAYER);
     const [isGameOver, setIsGameOver] = useState<boolean>(false);
+    const [reset, setReset] = useState<boolean>(false);
+
+    //reset game
+    useEffect(() => {
+        if (!reset && userCards.cards.length > 0) {
+            setDeck(generateDeck());
+            setDealNumber(1);
+            setUserCards({ cards: [], totalValue: 0 });
+            setComputerCards({ cards: [], totalValue: 0 });
+            setPlayer(PlayerKeys.PLAYER);
+            setIsGameOver(false);
+            setIsEnough(false);
+        }
+    }, [reset])
 
     useEffect(() => {
         if (!isGameOver) {
@@ -45,7 +59,9 @@ const BlackJackContainer = () => {
                 computerCards.push(randomCard[0].card)
                 computerValue += randomCard[0].card === "A" && computerValue > 10 ? 1 : randomCard[0].value;
             }
-            setComputerCards({cards:computerCards,totalValue:computerValue})
+            setComputerCards({ cards: computerCards, totalValue: computerValue });
+            setReset(true);
+
         }
     }, [player])
 
@@ -63,11 +79,12 @@ const BlackJackContainer = () => {
                 setIsEnough(true);
             } else if (totalValue > 21) {
                 setIsGameOver(true);
+                setReset(true)
             } else {
                 setDeck(deckCopy);
             }
         }
-    }, [dealNumber])
+    }, [dealNumber, player])
 
     useEffect(() => {
         if (isEnough) {
@@ -80,8 +97,10 @@ const BlackJackContainer = () => {
             userCards={userCards}
             computerCards={computerCards}
             isEnough={isEnough}
-            isHuman={player === PlayerKeys.PLAYER}
+            isPlayer={player === PlayerKeys.PLAYER}
             isGameOver={isGameOver}
+            reset={reset}
+            setReset={setReset}
             incrementDeal={setDealNumber}
             setIsEnough={setIsEnough}
         />

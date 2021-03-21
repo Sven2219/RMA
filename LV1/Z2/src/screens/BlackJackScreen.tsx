@@ -11,8 +11,10 @@ interface Props {
     userCards: BlackJack
     computerCards: BlackJack
     isEnough: boolean;
-    isHuman: boolean;
+    isPlayer: boolean;
     isGameOver: boolean;
+    reset: boolean;
+    setReset: React.Dispatch<React.SetStateAction<boolean>>;
     incrementDeal: React.Dispatch<React.SetStateAction<number>>;
     setIsEnough: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -44,11 +46,11 @@ const BlackJackScreen = (props: Props) => {
                 <Text style={styles.title}>{I18n.t("blackJack")}</Text>
             </View>
             <View style={styles.playerContainer}>
-                <Text style={styles.player}>{props.isHuman ? I18n.t("player") : I18n.t("computer")}</Text>
-                <Text style={styles.player}>Score: {props.isHuman ? props.userCards.totalValue : props.computerCards.totalValue}</Text>
+                <Text style={styles.player}>{props.isPlayer ? I18n.t("player") : I18n.t("computer")}</Text>
+                <Text style={styles.player}>Score: {props.isPlayer ? props.userCards.totalValue : props.computerCards.totalValue}</Text>
             </View>
             <FlatList
-                data={props.isHuman ? props.userCards.cards : props.computerCards.cards}
+                data={props.isPlayer ? props.userCards.cards : props.computerCards.cards}
                 numColumns={3}
                 keyExtractor={(item, index) => `${index.toString()} --`}
                 renderItem={({ item, index }) => {
@@ -59,7 +61,7 @@ const BlackJackScreen = (props: Props) => {
                     )
                 }}
             />
-            { props.computerCards.totalValue!==0 || props.isGameOver?
+            { props.computerCards.totalValue !== 0 || props.isGameOver ?
                 <View style={styles.resultContainer}>
                     <Text style={[styles.resultText, { color: getResult(fields.COLOR) }]}>
                         {getResult(fields.TEXT)}
@@ -68,9 +70,14 @@ const BlackJackScreen = (props: Props) => {
             }
 
             {
-                props.isHuman ? <View style={styles.buttonContainer}>
+                props.isPlayer && !props.reset? <View style={styles.buttonContainer}>
                     <CustomButton title={I18n.t("deal")} handleClick={() => props.incrementDeal((state) => state + 1)} />
                     <CustomButton title={I18n.t("stand")} handleClick={() => props.setIsEnough(true)} />
+                </View> : null
+            }
+            {
+                props.reset ? <View style={styles.retryContainer}>
+                    <CustomButton title={I18n.t("retry")} handleClick={() => props.setReset(false)} />
                 </View> : null
             }
 
@@ -118,6 +125,10 @@ const styles = StyleSheet.create({
     },
     cardContainer: {
         padding: 25
+    },
+    retryContainer: {
+        alignItems: 'center',
+        padding: 10
     }
 })
 
