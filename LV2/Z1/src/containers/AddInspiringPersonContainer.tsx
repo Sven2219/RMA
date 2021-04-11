@@ -47,8 +47,6 @@ const AddInspiringPersonContainer = () => {
             {
                 mediaType: 'photo',
                 includeBase64: imagePickerProps.includeBase64,
-                maxHeight: imagePickerProps.maxHeight,
-                maxWidth: imagePickerProps.maxWidth,
             },
             (response) => {
                 if (response.uri)

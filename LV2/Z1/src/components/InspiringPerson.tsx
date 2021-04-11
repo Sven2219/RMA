@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     infoContainer: {
-        marginLeft: 20,
+        marginLeft: 5,
+        marginTop:5,
         overflow: 'hidden',
         maxWidth: dimensions.width - 170
     },
