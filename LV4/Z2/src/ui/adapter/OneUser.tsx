@@ -7,22 +7,38 @@ interface Props {
 }
 
 const OneUser = (props: Props) => {
+    console.log(props.item)
     return (
         <View style={styles.userContainer}>
-            <Image source={{ uri: props.item.avatar }} style={styles.imageSize} />
-            <Text>{props.item.name}</Text>
+            <View style={styles.imageSize}>
+                <Image source={{ uri: props.item.avatar }} />
+            </View>
+            <View style={styles.userInfoContainer}>
+                <Text style={styles.textStyle}>{props.item.name}</Text>
+                <Text style={styles.textStyle}>{props.item.email}</Text>
+            </View>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     imageSize: {
-        width: 200,
-        height: 200,
+        width: 150,
+        height: 150,
         borderWidth: 1,
+        borderRadius: 4,
     },
     userContainer: {
+        flexDirection: 'row',
+        padding: 10
+    },
+    userInfoContainer: {
+        padding: 10,
 
+    },
+    textStyle: {
+        fontSize: 14,
+        flexWrap: 'wrap',
     }
 })
 
