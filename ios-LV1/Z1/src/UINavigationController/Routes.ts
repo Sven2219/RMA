@@ -1,0 +1,4 @@
+export const Routes = {
+    DESTINATIONS: "DESTINATIONS",
+    ADD_DESTINATION: "ADD_DESTINATION"
+}
