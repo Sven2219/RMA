@@ -5,6 +5,11 @@ platform :ios, '10.0'
 
 target 'Z1' do
   config = use_native_modules!
+  rn_maps_path = '../node_modules/react-native-maps'
+  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
+  pod 'react-native-google-maps', :path => rn_maps_path
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
 
   use_react_native!(
     :path => config[:reactNativePath],
@@ -12,9 +17,6 @@ target 'Z1' do
     :hermes_enabled => false
   )
 
-  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
-
-  pod 'react-native-maps', :path => '../node_modules/react-native-maps'
 
   target 'Z1Tests' do
     inherit! :complete

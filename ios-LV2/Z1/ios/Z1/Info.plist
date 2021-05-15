@@ -70,5 +70,9 @@
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
 	</array>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>
+In order to be able to display the desired location, the app needs your consent to record your location.</string>
+
 </dict>
 </plist>
