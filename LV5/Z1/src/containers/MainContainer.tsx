@@ -4,9 +4,6 @@ import MainScreen from '../screens/MainScreen';
 var Sound = require('react-native-sound');
 Sound.setCategory('Playback');
 
-
-
-
 const MainContainer = () => {
 
     const playSound = React.useCallback((item: Playlist) => {
