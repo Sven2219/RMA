@@ -1,0 +1,50 @@
+import React from 'react';
+import { ToastAndroid } from 'react-native';
+import { MainDispatch } from '../context/MainDispatch';
+import { MainState } from '../context/MainState';
+import { deleteByID, readAll } from '../helpers/sqlHelper';
+import { ActionTypes } from '../reducers/MainReducer';
+import InspiringPersonsScreen from '../screens/InspiringPersonsScreen';
+
+export const CLOSED_MODAL = -1;
+
+var SQLite = require('react-native-sqlite-storage')
+var db = SQLite.openDatabase({ name: 'InspiringPeople.db', createFromLocation: '~inspiringPeople.db' })
+
+const InspiringPersonsContainer = () => {
+    const { state } = React.useContext(MainState);
+    const { dispatch } = React.useContext(MainDispatch);
+
+    const [activeIndex, setActiveIndex] = React.useState<number>(CLOSED_MODAL);
+
+    React.useEffect(() => {
+        readAll(db).then((res: any) => dispatch({ type: ActionTypes.SET_INSPIRING_PERSONS, payload: res })).catch(() => { })
+    }, [])
+
+    const randomQuote = React.useCallback((index: number) => {
+        const currentPerson = state.inspiringPersons[index];
+        const randomNumber = Math.floor(Math.random() * currentPerson.quotes.length);
+        ToastAndroid.show(`${currentPerson.firstName} ${currentPerson.lastName}: ${currentPerson.quotes[randomNumber]}`, ToastAndroid.LONG);
+    }, [state.inspiringPersons])
+
+    const deletePerson = React.useCallback((index: number) => {
+        const personsCopy = [...state.inspiringPersons];
+        personsCopy.splice(index, 1);
+        deleteByID(db, state.inspiringPersons[index].id);
+        dispatch({ type: ActionTypes.SET_INSPIRING_PERSONS, payload: personsCopy });
+    }, [state.inspiringPersons])
+
+
+    return (
+        <InspiringPersonsScreen
+            inspiringPersons={state.inspiringPersons}
+            activeIndex={activeIndex}
+            setActiveIndex={setActiveIndex}
+            randomQuote={randomQuote}
+            deletePerson={deletePerson}
+        />
+    )
+}
+
+
+export default InspiringPersonsContainer;
