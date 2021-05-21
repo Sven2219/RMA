@@ -3,8 +3,8 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Routes } from './Routes';
-import DestinationContainer from '../containers/DestinationContainer';
-import AddDestinationContainer from '../containers/AddDestinationContainer';
+import DestinationContainer from '../UIViewController/DestinationContainer';
+import AddDestinationContainer from '../UIViewController/AddDestinationContainer';
 
 const Stack = createStackNavigator();
 

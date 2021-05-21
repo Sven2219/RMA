@@ -1,11 +1,11 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { MainDispatch } from '../context/MainDispatch';
-import { MainState } from '../context/MainState';
-import { ActionTypes } from '../reducers/MainReducer';
+import { MainDispatch } from '../Context/MainDispatch';
+import { MainState } from '../Context/MainState';
+import { ActionTypes } from '../Store/MainReducer';
 
-import AddDestinationScreen from '../screens/AddDestinationScreen';
+import AddDestinationScreen from '../UIScreens/AddDestinationScreen';
 import Destination from '../types/Destination';
 
 export const destinationFields = {

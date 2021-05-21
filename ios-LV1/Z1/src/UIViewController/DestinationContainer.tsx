@@ -1,13 +1,14 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useCallback, useContext } from 'react';
 import { AppState } from 'react-native';
-import { MainDispatch } from '../context/MainDispatch';
-import { MainState } from '../context/MainState';
-import { getFromAsyncStorage, saveToAsyncStorage } from '../helpers/storageHelper';
-import { Routes } from '../navigation/Routes';
-import { ActionTypes } from '../reducers/MainReducer';
-import DestinationsScreen from '../screens/DestinationsScreen';
+import { MainDispatch } from '../Context/MainDispatch';
+import { MainState } from '../Context/MainState';
+import { getFromAsyncStorage, saveToAsyncStorage } from '../Helpers/storageHelper';
+
+import { ActionTypes } from '../Store/MainReducer';
+import DestinationsScreen from '../UIScreens/DestinationsScreen';
 import Destination from '../types/Destination';
+import { Routes } from '../UINavigationController/Routes';
 
 const DESTINATION_KEY = "DESTINATION_KEY";
 

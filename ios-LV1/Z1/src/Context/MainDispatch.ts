@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { Actions } from '../reducers/MainReducer';
+import { Actions } from '../Store/MainReducer';
 
 interface ContextProps {
     dispatch: React.Dispatch<Actions>;

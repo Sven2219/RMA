@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, FlatList, View, Text } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons'
-import OneDestination from '../components/OneDestination';
+import OneDestination from '../Components/OneDestination';
 import Destination from '../types/Destination';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 

@@ -1,7 +1,8 @@
 import React, { useReducer } from "react";
-import { MainDispatch } from "../context/MainDispatch";
-import { MainState } from "../context/MainState";
-import { Actions, reducer, State } from "../reducers/MainReducer";
+import { MainDispatch } from "../Context/MainDispatch";
+import { MainState } from "../Context/MainState";
+
+import { Actions, reducer, State } from "../Store/MainReducer";
 import StackNavigation from "./StackNavigation";
 
 const App = () => {

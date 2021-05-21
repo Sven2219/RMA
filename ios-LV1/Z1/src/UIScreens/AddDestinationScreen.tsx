@@ -2,7 +2,7 @@ import React from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { StyleSheet, View, TextInput, Text } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { destinationFields } from '../containers/AddDestinationContainer';
+import { destinationFields } from '../UIViewController/AddDestinationContainer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 interface Props {
