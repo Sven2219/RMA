@@ -31,8 +31,8 @@ const DestinationsScreen = (props: Props) => {
                     Moje destinacije
                 </Text>
             </View>
-            <TouchableOpacity containerStyle={styles.addButtonContainer}>
-                <Ionicons name="add" size={35} onPress={props.goToAddNewDestination} color={'blue'} />
+            <TouchableOpacity containerStyle={styles.addButtonContainer} onPress={props.goToAddNewDestination}>
+               <Text>Plus</Text>
             </TouchableOpacity>
             {MemoizedListOfDestinations}
         </View>
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
     addButtonContainer: {
         position: 'absolute',
         right: 0,
-        top: 15
+        top: 45
     }
 })
 
