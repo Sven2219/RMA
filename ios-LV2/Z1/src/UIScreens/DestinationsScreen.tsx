@@ -62,8 +62,8 @@ const DestinationsScreen = (props: Props) => {
                     Moje destinacije
                 </Text>
             </View>
-            <TouchableOpacity style={styles.addButtonContainer}>
-                <Ionicons name="add" size={35} onPress={props.goToAddNewDestination} color={'blue'} />
+            <TouchableOpacity style={styles.addButtonContainer} onPress={props.goToAddNewDestination}>
+                <Text>Plus</Text>
             </TouchableOpacity>
             {MemoizedListOfDestinations}
             {DeleteModal}
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     addButtonContainer: {
         position: 'absolute',
         right: 0,
-        top: 15
+        top: 50
     },
     modalContainer: {
         width: 250,
