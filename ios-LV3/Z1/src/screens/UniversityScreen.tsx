@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         flexDirection: 'row',
+        paddingTop:20,
         backgroundColor: '#d3d3d3'
     },
     headerText: {

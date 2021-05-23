@@ -27,6 +27,7 @@ const UniversityContainer = () => {
             }, {} as University)
             setUniversities(Object.values(formatedData));
         } catch (error) {
+            console.log("error",error)
             setError("URLSessionTask failed with error: The internet connection appears to be offline.");
         }
     }, [])
